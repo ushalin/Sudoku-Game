@@ -1,0 +1,298 @@
+/*
+ICS3U1
+Sudoku - ISU Project
+Written by : Shalin Upadhyay & Kalan Dowrich
+Written for : Ms.Ganesan
+Due : January 21, 2013
+Submitted : January 21, 2013
+
+This program is composed of several methods and will extend into a class within another .java file
+Together everything will join to make the very famous game, Sudoku.
+The entire game is GUI based, in which the user can click the buttons displayed in a 9x9 grid, and can then
+enter a number that they feel should fit in that empty space
+
+Variables Dictionary :
+
+num_check - This variable compares the puzzle made in Main_Logic with the inputs by the user
+num_main - This variable is used to check whether the puzzle solved is correct or not
+num_checker - Converts the user input into a number, to make sure it is between 1-9
+randomnum - Used as random variable to display a certain message when something occurs
+*/
+
+//Imports all necessary packages
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class Sudoku_Main extends JFrame implements ActionListener
+{
+    //All global variables and objects used throughout the class
+    JPanel contentPane;
+
+    JButton tiles[] [] = new JButton [9] [9];
+
+    JMenuBar mbar; //Creates the entire menu bar
+    JMenu file, help; //Creates all menu options
+    JMenuItem pc, instruc, credits, exit, game; //Creates all menu items
+
+    int num_check[] [] = new int [9] [9];
+    int num_hide[] [] = new int [9] [9];
+
+    String input = "";
+
+    //Calls on Sudoku_Main constructor
+    public static void main (String[] args)
+    {
+        new Sudoku_Main ();
+    }
+
+
+    //Constructor for the class
+    public Sudoku_Main ()
+    {
+        //Creates the object lm for the Logic_Main class
+        Logic_Main lm = new Logic_Main ();
+
+        //Sets output panel size of 800 x 800
+        this.setSize (800, 800);
+        //Will completely stop program from running if "Close" button is pressed
+        this.setDefaultCloseOperation (EXIT_ON_CLOSE);
+        //Sets the location of the output window to the center of the screen
+        this.setLocationRelativeTo (null);
+        //Prevents user from resizing the output screen
+        this.setResizable (false);
+
+        //Gets root content pane
+        contentPane = (JPanel) this.getContentPane ();
+        //Layout of contentPane is set to GridLayout to allow 9x9 grid of JButtons
+        contentPane.setLayout (new GridLayout (9, 9));
+
+        //Calls on the Puzzle_Save method within Logic_Main
+        lm.Puzzle_Save ();
+
+        //Calls on the Puzzle_Hide method within Logic_Main
+        lm.Puzzle_Hide ();
+
+        int num_checker = 0;
+
+        //Creates the MenuBar
+        mbar = new JMenuBar ();
+
+        //Creates the JMenus
+        file = new JMenu ("File");
+        help = new JMenu ("Help");
+
+        //Creates all JMenuItems
+        pc = new JMenuItem ("Submit");
+        exit = new JMenuItem ("Exit");
+        game = new JMenuItem ("New Game");
+        instruc = new JMenuItem ("How To Play");
+        credits = new JMenuItem ("Credits");
+
+        //Sets the JMenuBar as the mbar object
+        setJMenuBar (mbar);
+
+        //Adds JMenuItems to the respective Menus
+        file.add (game);
+        file.add (pc);
+        //Creates the separator
+        file.add (new JSeparator ());
+        file.add (exit);
+        help.add (instruc);
+        help.add (credits);
+        mbar.add (file);
+        mbar.add (help);
+
+        //Creates the JButtons for the 9x9 grid
+        for (int i = 0 ; i < 9 ; i++)
+        {
+            for (int j = 0 ; j < 9 ; j++)
+            {
+                tiles [i] [j] = new JButton ("" + num_hide [i] [j]);
+                tiles [i] [j].setFont (new Font ("Comic Sans MS", Font.BOLD, 40));
+                tiles [i] [j].setForeground (Color.yellow);
+
+                if (num_hide [i] [j] == 0)
+                {
+                    tiles [i] [j].setText ("");
+                    tiles [i] [j].setBackground (Color.BLUE);
+                    tiles [i] [j].addActionListener (this);
+                }
+
+                contentPane.add (tiles [i] [j]);
+
+                if (i == 3 || i == 4 || i == 5 || j == 3 || j == 4 || j == 5)
+                {
+                    if (2 < i && i < 6 && 2 < j && j < 6)
+                    {
+                        tiles [i] [j].setBackground (Color.darkGray);
+                        continue;
+                    }
+                    tiles [i] [j].setBackground (Color.lightGray);
+                }
+
+                else
+                {
+                    tiles [i] [j].setBackground (Color.darkGray);
+                }
+            }
+        }
+
+        //ActionListener for the "New Game" selection in the menu
+        game.addActionListener (
+                new ActionListener ()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
+                //Disposes of the JPanel
+                dispose ();
+                //Calls on the Sudoku_Main constructor to re-create a new puzzle
+                new Sudoku_Main ();
+            }
+        }
+        );
+
+        //ActionListener for the "Submit" selection in the menu
+        pc.addActionListener (
+                new ActionListener ()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
+                int randomnum = 0;
+
+                for (int i = 0 ; i < 9 ; i++)
+                {
+                    for (int j = 0 ; j < 9 ; j++)
+                    {
+                        if (num_check [i] [j] != Integer.parseInt (tiles [i] [j].getText ()))
+                        {
+                            randomnum = 1;
+                            break;
+                        }
+                    }
+                }
+
+                for (int i = 0 ; i < 9 ; i++)
+                {
+                    System.out.println ();
+                    for (int j = 0 ; j < 9 ; j++)
+                    {
+                        System.out.print (num_check [i] [j]);
+                        System.out.print (Integer.parseInt (tiles [i] [j].getText ()) + "  ");
+                    }
+                }
+
+                System.out.print ("\n" + randomnum);
+
+                if (randomnum == 0)
+                {
+                    JOptionPane.showMessageDialog (Sudoku_Main.this, "Congratulations! You Solved It!");
+                    System.exit (0);
+                }
+
+                else
+                {
+                    JOptionPane.showMessageDialog (Sudoku_Main.this, "Not Solved Yet! Keep Trying!");
+                }
+            }
+        }
+        );
+
+        //ActionListener for the "How to Play" selection in the menu
+        instruc.addActionListener (
+                new ActionListener ()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
+                JOptionPane.showMessageDialog (contentPane, "SUDOKU INSTRUCTIONS\n There can only be ONE of the same number (1-9) in every  :\n ROW (Horizontal), COLUMN (Vertical) and 3 X 3 SQUARE.\n If more than one of the same number is placed in the same row, column or 3x3 square, then you cannot win!", "INSTRUCTIONS", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        );
+
+        //ActionListener for the "Credits" selection in the menu
+        credits.addActionListener (
+                new ActionListener ()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
+                JOptionPane.showMessageDialog (contentPane, "Programmed by :\nShalin Upadhyay\nKalan Dowrich", "CREDITS", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        );
+
+        //ActionListener for the "Exit" selection in the menu
+        exit.addActionListener (
+                new ActionListener ()
+        {
+            public void actionPerformed (ActionEvent e)
+            {
+                System.exit (0);
+            }
+        }
+        );
+
+        //Displays the output screen
+        this.show ();
+    }
+
+
+    public class Logic_Main extends Main_Logic
+    {
+        void Puzzle_Save ()
+        {
+            num_check = save ();
+
+            // The comment coded code below displays the solution to the puzzle
+
+            /*for (int i = 0 ; i < 9 ; i++)
+            {
+                for (int j = 0 ; j < 9 ; j++)
+                {
+                    System.out.print (num_check [i] [j] + " ");
+                }
+                System.out.println ();
+            }*/
+        }
+
+
+        void Puzzle_Hide ()
+        {
+            num_hide = hide ();
+        }
+    }
+
+
+    public void actionPerformed (ActionEvent e)
+    {
+        for (int i = 0 ; i < 9 ; i++)
+        {
+            for (int j = 0 ; j < 9 ; j++)
+            {
+                //If one of the empty buttons is clicked
+                if (e.getSource () == tiles [i] [j])
+                {
+                    this.input = JOptionPane.showInputDialog ("Enter a Number (1-9)");
+                    int num_checker = 0;
+
+                    try
+                    {
+                        num_checker = Integer.parseInt (input);
+                    }
+
+                    catch (NumberFormatException nfe)
+                    {
+                    }
+
+                    //Displays only numbers between 1 - 9, as per Sudoku rules
+                    if (0 < num_checker && 10 > num_checker)
+                    {
+                        tiles [i] [j].setText (input);
+                        tiles [i] [j].setFont (new Font ("Comic Sans MS", Font.BOLD, 40));
+                        tiles [i] [j].setForeground (Color.red);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
