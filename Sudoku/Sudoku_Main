@@ -204,7 +204,7 @@ public class Sudoku_Main extends JFrame implements ActionListener
         {
             public void actionPerformed (ActionEvent e)
             {
-                JOptionPane.showMessageDialog (contentPane, "SUDOKU INSTRUCTIONS\n There can only be ONE of the same number (1-9) in every  :\n ROW (Horizontal), COLUMN (Vertical) and 3 X 3 SQUARE.\n If more than one of the same number is placed in the same row, column or 3x3 square, then you cannot win!", "INSTRUCTIONS", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog (contentPane, "SUDOKU INSTRUCTIONS\n There can only be ONE of the same number (1-9) in every  :\n ROW (Horizontal), COLUMN (Vertical) and 3 X 3 SQUARE.\n If more than one of the same number is placed in the same row, column or 3x3 square, then you cannot win!\n\n NOTE: Enter '0' to make the spot blank", "INSTRUCTIONS", JOptionPane.PLAIN_MESSAGE);
             }
         }
         );
@@ -272,7 +272,7 @@ public class Sudoku_Main extends JFrame implements ActionListener
                 if (e.getSource () == tiles [i] [j])
                 {
                     this.input = JOptionPane.showInputDialog ("Enter a Number (1-9)");
-                    int num_checker = 0;
+                    int num_checker = -1;
 
                     try
                     {
@@ -289,6 +289,11 @@ public class Sudoku_Main extends JFrame implements ActionListener
                         tiles [i] [j].setText (input);
                         tiles [i] [j].setFont (new Font ("Comic Sans MS", Font.BOLD, 40));
                         tiles [i] [j].setForeground (Color.red);
+                    }
+
+                    if (num_checker == 0)
+                    {
+                        tiles [i] [j].setText (" ");
                     }
                     break;
                 }
