@@ -1,6 +1,6 @@
 Sudoku was made for the Grade 11 Computer Science ISU.
 
-Programmers: Shalin Upadhyay, Cameron Frizado, Kalan Dowrich
+Programmers: Shalin Upadhyay, Kalan Dowrich
 
 Created: January 2013
 
