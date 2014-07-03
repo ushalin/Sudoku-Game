@@ -54,23 +54,23 @@ public class Main_Logic
     {
         int max = 10 + Num.nextInt (10); //.nextInt(10) sets the max value of the random number less than 10 (0-9)
 
-        for (int count = 0 ; count < max ; count++)
+        for (int i = 0 ; i < max ; i++)
         {
-            for (int count2 = 0 ; count2 < 3 ; count2++)
+            for (int j = 0 ; j < 3 ; j++)
             {
-                if (count2 == 0)
+                if (j == 0)
                 {
                     Row_F = Num.nextInt (3);
                     Row_S = Num.nextInt (3);
                 }
 
-                else if (count2 == 1)
+                else if (j == 1)
                 {
                     Row_F = 3 + Num.nextInt (3);
                     Row_S = 3 + Num.nextInt (3);
                 }
 
-                else if (count2 == 2)
+                else if (j == 2)
                 {
                     Row_F = 6 + Num.nextInt (3);
                     Row_S = 6 + Num.nextInt (3);
@@ -84,31 +84,31 @@ public class Main_Logic
                 }
             }
 
-            for (int count2 = 0 ; count2 < 3 ; count2++)
+            for (int j = 0 ; j < 3 ; j++)
             {
-                if (count2 == 0)
+                if (j == 0)
                 {
                     Col_F = Num.nextInt (3);
                     Col_S = Num.nextInt (3);
                 }
 
-                else if (count2 == 1)
+                else if (j == 1)
                 {
                     Col_F = 3 + Num.nextInt (3);
                     Col_S = 3 + Num.nextInt (3);
                 }
 
-                else if (count2 == 2)
+                else if (j == 2)
                 {
                     Col_F = 6 + Num.nextInt (3);
                     Col_S = 6 + Num.nextInt (3);
                 }
 
-                for (int count3 = 0 ; count3 < 9 ; count3++)
+                for (int k = 0 ; k < 9 ; k++)
                 {
-                    hold [count3] = Total_Blocks [count3] [Col_F];
-                    Total_Blocks [count3] [Col_F] = Total_Blocks [count3] [Col_S];
-                    Total_Blocks [count3] [Col_S] = hold [count3];
+                    hold [k] = Total_Blocks [k] [Col_F];
+                    Total_Blocks [k] [Col_F] = Total_Blocks [k] [Col_S];
+                    Total_Blocks [k] [Col_S] = hold [k];
                 }
             }
         }
@@ -118,37 +118,37 @@ public class Main_Logic
 
         if ((Grid_F == 1 && Grid_S == 2) || (Grid_F == 2 && Grid_S == 1))
         {
-            for (int count3 = 0 ; count3 < 3 ; count3++)
+            for (int i = 0 ; i < 3 ; i++)
             {
-                for (int count4 = 0 ; count4 < 9 ; count4++)
+                for (int j = 0 ; j < 9 ; j++)
                 {
-                    hold [count4] = Total_Blocks [count3] [count4];
-                    Total_Blocks [count3] [count4] = Total_Blocks [count3 + 3] [count4];
-                    Total_Blocks [count3 + 3] [count4] = hold [count4];
+                    hold [j] = Total_Blocks [i] [j];
+                    Total_Blocks [i] [j] = Total_Blocks [i + 3] [j];
+                    Total_Blocks [i + 3] [j] = hold [j];
                 }
             }
         }
         else if ((Grid_F == 2 && Grid_S == 3) || (Grid_F == 3 && Grid_S == 2))
         {
-            for (int count3 = 3 ; count3 < 6 ; count3++)
+            for (int i = 3 ; i < 6 ; i++)
             {
-                for (int count4 = 0 ; count4 < 9 ; count4++)
+                for (int j = 0 ; j < 9 ; j++)
                 {
-                    hold [count4] = Total_Blocks [count3] [count4];
-                    Total_Blocks [count3] [count4] = Total_Blocks [count3 + 3] [count4];
-                    Total_Blocks [count3 + 3] [count4] = hold [count4];
+                    hold [j] = Total_Blocks [i] [j];
+                    Total_Blocks [i] [j] = Total_Blocks [i + 3] [j];
+                    Total_Blocks [i + 3] [j] = hold [j];
                 }
             }
         }
         else if ((Grid_F == 1 && Grid_S == 3) || (Grid_F == 3 && Grid_S == 1))
         {
-            for (int count3 = 0 ; count3 < 3 ; count3++)
+            for (int i = 0 ; i < 3 ; i++)
             {
-                for (int count4 = 0 ; count4 < 9 ; count4++)
+                for (int j = 0 ; j < 9 ; j++)
                 {
-                    hold [count4] = Total_Blocks [count3] [count4];
-                    Total_Blocks [count3] [count4] = Total_Blocks [count3 + 6] [count4];
-                    Total_Blocks [count3 + 6] [count4] = hold [count4];
+                    hold [j] = Total_Blocks [i] [j];
+                    Total_Blocks [i] [j] = Total_Blocks [i + 6] [j];
+                    Total_Blocks [i + 6] [j] = hold [j];
                 }
             }
         }
@@ -162,18 +162,18 @@ public class Main_Logic
             Num_F = 1 + Random_3Num.nextInt (9);
             Num_S = 1 + Random_3Num.nextInt (9);
 
-            for (int count3 = 0 ; count3 < 9 ; count3++)
+            for (int i = 0 ; i < 9 ; i++)
             {
-                for (int count4 = 0 ; count4 < 9 ; count4++)
+                for (int j = 0 ; j < 9 ; j++)
                 {
-                    if (Total_Blocks [count3] [count4] == Num_F)
+                    if (Total_Blocks [i] [j] == Num_F)
                     {
-                        Total_Blocks [count3] [count4] = Num_S;
+                        Total_Blocks [i] [j] = Num_S;
                         continue;
                     }
 
-                    if (Total_Blocks [count3] [count4] == Num_S)
-                        Total_Blocks [count3] [count4] = Num_F;
+                    if (Total_Blocks [i] [j] == Num_S)
+                        Total_Blocks [i] [j] = Num_F;
                 }
             }
         }
@@ -200,11 +200,11 @@ public class Main_Logic
         // Makes only certain numbers visible by the user
         // The others will be the ones the user has to input
     {
-        for (int count3 = 0 ; count3 < 9 ; count3++)
+        for (int i = 0 ; i < 9 ; i++)
         {
-            for (int count4 = 0 ; count4 < 9 ; count4++)
+            for (int j = 0 ; j < 9 ; j++)
             {
-                Hori_Block [count3] [count4] = Colu_Block [count3] [count4];
+                Hori_Block [i] [j] = Colu_Block [i] [j];
             }
         }
 
@@ -212,7 +212,7 @@ public class Main_Logic
 
         hidingnum = 50 + Num.nextInt (10);
 
-        for (int count3 = 0 ; count3 < hidingnum ; count3++)
+        for (int i = 0 ; i < hidingnum ; i++)
         {
             row = Hori_RNum.nextInt (9);
             column = Hori_RNum.nextInt (9);
